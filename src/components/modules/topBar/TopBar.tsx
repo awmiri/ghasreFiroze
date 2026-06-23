@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function TopBar() {
@@ -13,9 +14,12 @@ function TopBar() {
         />
       </div>
 
-      <button className="text-nowrap bg-blue-500 hover:bg-blue-600 transition-all text-white text-sm font-IRANYekanX-medium p-2 rounded-lg">
+      <Link
+        href={"/dashboard/file/create"}
+        className="text-nowrap bg-blue-500 hover:bg-blue-600 transition-all text-white text-sm font-IRANYekanX-medium p-2 rounded-lg"
+      >
         ثبت اگهی
-      </button>
+      </Link>
     </div>
   );
 }

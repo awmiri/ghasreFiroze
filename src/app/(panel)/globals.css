@@ -65,6 +65,7 @@
 /* global setting */
 body {
   box-sizing: border-box;
+  background-color: white;
 }
 
 /* add custom setting */
@@ -89,7 +90,7 @@ body {
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-  background: #e5e7eb; /* رنگ خاکستری روشن */
+  background: #e5e7eb !important; /* رنگ خاکستری روشن */
   border-radius: 10px;
 }
 

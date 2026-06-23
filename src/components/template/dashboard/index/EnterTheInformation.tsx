@@ -8,9 +8,12 @@ import { ToolsRowExpand } from "@/utils/tools/ui/row_expand";
 import ToolsInputText1 from "@/utils/tools/ui/ToolsInputText";
 import React, { useState } from "react";
 import { BiMoney } from "react-icons/bi";
-import { IoCall } from "react-icons/io5";
+import { IoArrowForward, IoCall } from "react-icons/io5";
 
-function EnterTheInformation() {
+interface EnterTheInformationProp {
+  nextItem: () => void;
+}
+function EnterTheInformation({ nextItem }: EnterTheInformationProp) {
   const category = useDataDropDown<string>(null, MakeMap(propertyTypes));
 
   const subcategory = useDataDropDown<string>(null, MakeMap(dealTypes));
@@ -200,6 +203,19 @@ function EnterTheInformation() {
           </div>
         </>
       ) : null}
+      <button
+        onClick={nextItem}
+        className="bg-blue-500 group cursor-pointer transition-all hover:bg-blue-600 text-white p-1.5 w-full rounded-xl font-kalame-Medium flex items-center justify-center relative h-11"
+      >
+        <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
+          ثبت اطلاعات اگهی
+        </p>
+
+        <IoArrowForward
+          size={25}
+          className="transition-all rotate-180 duration-300 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0"
+        />
+      </button>
     </div>
   );
 }

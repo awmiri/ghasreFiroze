@@ -3,8 +3,12 @@ import { ToolsRowExpand } from "@/utils/tools/ui/row_expand";
 import ToolsInputText1 from "@/utils/tools/ui/ToolsInputText";
 import { ImageDownIcon } from "lucide-react";
 import React, { useState } from "react";
+import { IoArrowForward } from "react-icons/io5";
+interface EnterTheMoreInformationProp {
+  nextItem: () => void;
+}
 
-function HomeLocation() {
+function HomeLocation({ nextItem }: EnterTheMoreInformationProp) {
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
   const [street, setStreet] = useState("");
@@ -57,6 +61,19 @@ function HomeLocation() {
           <p>نقشه</p>
         </div>
       </div>
+      <button
+        onClick={nextItem}
+        className="bg-blue-500 group cursor-pointer transition-all hover:bg-blue-600 text-white p-1.5 w-full rounded-xl font-kalame-Medium flex items-center justify-center relative h-11"
+      >
+        <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
+          ثبت اطلاعات اگهی
+        </p>
+
+        <IoArrowForward
+          size={25}
+          className="transition-all rotate-180 duration-300 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0"
+        />
+      </button>
     </div>
   );
 }

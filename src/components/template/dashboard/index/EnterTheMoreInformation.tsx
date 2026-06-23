@@ -24,8 +24,13 @@ import { ToolsRowExpand } from "@/utils/tools/ui/row_expand";
 import ToolsInputText1 from "@/utils/tools/ui/ToolsInputText";
 import { Minus, Plus } from "lucide-react";
 import React, { useState } from "react";
+import { IoArrowForward } from "react-icons/io5";
 
-function EnterTheMoreInformation() {
+interface EnterTheMoreInformationProp {
+  nextItem: () => void;
+}
+
+function EnterTheMoreInformation({ nextItem }: EnterTheMoreInformationProp) {
   const moamele = useMultiSelectDropDown<string>([], MakeMap(buildingFacades));
   const areaType = useMultiSelectDropDown<string>([], MakeMap(buildingArea));
   const galleryType = useMultiSelectDropDown<string>(
@@ -228,7 +233,7 @@ function EnterTheMoreInformation() {
 
   const [countParking, setCountParking] = useState(0);
 
-  let melk = "زمین";
+  let melk = "اپارتمان";
   return (
     <div className="w-full space-y-3">
       {["اپارتمان", "ویلا", "دفترکار", "مغازه", "زمین"].includes(melk) && (
@@ -742,6 +747,20 @@ function EnterTheMoreInformation() {
           </ToolsRowExpand>
         </div>
       )}
+
+      <button
+        onClick={nextItem}
+        className="bg-blue-500 group cursor-pointer transition-all hover:bg-blue-600 text-white p-1.5 w-full rounded-xl font-kalame-Medium flex items-center justify-center relative h-11"
+      >
+        <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
+          ثبت اطلاعات اگهی
+        </p>
+
+        <IoArrowForward
+          size={25}
+          className="transition-all rotate-180 duration-300 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0"
+        />
+      </button>
     </div>
   );
 }

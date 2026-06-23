@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { IoArrowForward } from "react-icons/io5";
 // import VenoBox from "venobox";
 // import "venobox/dist/venobox.min.css";
 
@@ -16,8 +17,11 @@ interface UploadProgress {
   total: number;
 }
 
+interface AdMediaUploaderProp {
+  nextItem: () => void;
+}
 // Main Component
-const AdMediaUploader: React.FC = () => {
+const AdMediaUploader = ({ nextItem }: AdMediaUploaderProp) => {
   // States
   const [images, setImages] = useState<ImageItem[]>([]);
   const [maxImagesCount, setMaxImagesCount] = useState<number>(8);
@@ -544,6 +548,19 @@ const AdMediaUploader: React.FC = () => {
           )}
         </div>
       </div>
+      <button
+        onClick={nextItem}
+        className="bg-blue-500 group cursor-pointer transition-all hover:bg-blue-600 text-white p-1.5 w-full rounded-xl font-kalame-Medium flex items-center justify-center relative h-11"
+      >
+        <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
+          ثبت اطلاعات اگهی
+        </p>
+
+        <IoArrowForward
+          size={25}
+          className="transition-all rotate-180 duration-300 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0"
+        />
+      </button>
     </div>
   );
 };

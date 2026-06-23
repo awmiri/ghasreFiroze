@@ -48,48 +48,18 @@ function MainContent() {
       </div>
       <div className="bg-white rounded-xl overflow-y-auto custom-scroll p-2 flex flex-col gap-4 flex-1">
         <div className="flex-1 space-y-4">
-          {stepUser === 1 && <EnterTheInformation />}
-          {stepUser === 2 && <EnterTheMoreInformation />}
-          {stepUser === 3 && <HomeLocation />}
-          {stepUser === 4 && <AdMediaUploader />}
+          {stepUser === 1 && (
+            <EnterTheInformation nextItem={() => setStepUser(2)} />
+          )}
+          {stepUser === 2 && (
+            <EnterTheMoreInformation nextItem={() => setStepUser(3)} />
+          )}
+          {stepUser === 3 && <HomeLocation nextItem={() => setStepUser(4)} />}
+          {stepUser === 4 && (
+            <AdMediaUploader nextItem={() => setStepUser(5)} />
+          )}
           {stepUser === 5 && <AddSellerNumber />}
         </div>
-        <button
-          className="bg-blue-500 group cursor-pointer transition-all hover:bg-blue-600 text-white p-1.5 w-full rounded-xl font-kalame-Medium flex items-center justify-center relative h-11"
-          onClick={() => setStepUser((prev) => Math.min(prev + 1, 5))}
-          disabled={stepUser === 5}
-        >
-          {stepUser === 1 ? (
-            <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
-              ثبت اطلاعات اگهی
-            </p>
-          ) : null}
-          {stepUser === 2 ? (
-            <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
-              ثبت اطلاعات تکمیلی
-            </p>
-          ) : null}
-          {stepUser === 3 ? (
-            <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
-              ثبت موقعیت مکانی
-            </p>
-          ) : null}
-          {stepUser === 4 ? (
-            <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
-              ثبت گالری تصاویر
-            </p>
-          ) : null}
-          {stepUser === 5 ? (
-            <p className="transition-all duration-300 absolute group-hover:opacity-0 group-hover:translate-x-3">
-              ثبت اطلاعات تماس
-            </p>
-          ) : null}
-
-          <IoArrowForward
-            size={25}
-            className="transition-all rotate-180 duration-300 opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0"
-          />
-        </button>
       </div>
     </div>
   );
