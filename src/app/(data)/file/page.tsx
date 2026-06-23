@@ -6,6 +6,7 @@ import TechnicalSpecifications from "@/components/template/files/leftContent/Tec
 import VideoAndImageGallery from "@/components/template/files/leftContent/VideoAndImageGallery";
 import ConsultantsBox from "@/components/template/files/rightContent/ConsultantsBox";
 import PriceBox from "@/components/template/files/rightContent/PriceBox";
+import RightContentLayout from "@/components/template/files/rightContent/RightContentLayout";
 import VirtualTore from "@/components/template/files/rightContent/VirtualTore";
 import MoreProductContent from "@/components/template/files/showMoreProduct/MoreProductContent";
 import Image from "next/image";
@@ -36,23 +37,12 @@ export default function Home() {
           </div>
 
           {/* right content of file*/}
-          <div className="w-full lg:w-75 shrink-0 flex flex-col gap-4 lg:sticky lg:top-6 self-start">
-            <PriceBox />
-
-            <VirtualTore />
-
-            <div className="border-t" style={{ borderColor: "#474f50" }} />
-
-            <ConsultantsBox />
-          </div>
+          <RightContentLayout />
         </div>
       </div>
 
       {/* related projects */}
-      <div
-        className="border-t mt-10 py-10"
-        style={{ borderColor: "#474f50", backgroundColor: "#3c4142" }}
-      >
+      <div className="border-t border-[#474f50] bg-[#3c4142] mt-10 py-10">
         <div className="mx-auto px-4">
           <MoreProductContent />
         </div>

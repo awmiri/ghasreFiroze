@@ -5,7 +5,10 @@ function MoreProductContent() {
   return (
     <>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-[15px] font-bold" style={{ color: "#40e0d0" }}>
+        <h2
+          className="text-[15px] font-IRANYekanX-Bold"
+          style={{ color: "#40e0d0" }}
+        >
           پروژه‌های مرتبط
         </h2>
         <div className="flex gap-2">

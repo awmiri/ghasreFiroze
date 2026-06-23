@@ -22,21 +22,18 @@ function ProductBox({ project }: ProductBoxProps) {
           fill
           className="object-cover"
         />
-        <div
-          className="absolute top-3 right-3 text-white text-[11px] font-semibold px-2.5 py-1 rounded-full"
-          style={{ backgroundColor: "#40e0d0" }}
-        >
+        <div className="absolute top-3 right-3 text-black/60 bg-[#40e0d0] text-[11px] font-semibold px-2.5 py-1.5 font-IRANYekanX-medium rounded-full">
           {project.price}
         </div>
       </div>
       <div className="p-4">
-        <div className="font-bold text-sm mb-2" style={{ color: "#d4cfc8" }}>
+        <div
+          className="font-IRANYekanX-Bold text-sm mb-2"
+          style={{ color: "#d4cfc8" }}
+        >
           {project.title}
         </div>
-        <div
-          className="flex items-center justify-between text-[11px]"
-          style={{ color: "#8a8880" }}
-        >
+        <div className="flex items-center text-[#8a8880] justify-between text-[11px] font-IRANYekanX-Regular">
           <span className="flex items-center gap-1">
             <svg
               className="w-3 h-3"
