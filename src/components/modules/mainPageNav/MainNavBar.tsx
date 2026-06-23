@@ -87,11 +87,13 @@ function MainNavBar() {
         {navOpen && (
           <div className="lg:hidden absolute font-IRANYekanX-medium top-full left-0 right-0 bg-[rgba(60,65,66,0.98)] border-b border-[#D4CFC8]/[0.07] px-7.5 py-6 flex flex-col">
             {[
-              ["#about", "درباره ما"],
-              ["#services", "خدمات"],
-              ["#projects", "پروژه‌ها"],
-              ["#process", "فرآیند"],
-              ["#contact", "دریافت مشاوره"],
+              ["/firozeproject", "پروژهای قصرفیروزه"],
+              ["/about-us", "درباره ما"],
+              ["/ourteam", "تیم ما"],
+              ["/contactus", "ارتباط با ما"],
+              ["/blogspage", "وبلاگ ها"],
+              ["/projects", "اگهی ها"],
+              ["/", "خانه"],
             ].map(([href, label]) => (
               <Link
                 key={href}
