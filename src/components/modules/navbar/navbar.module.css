@@ -1,0 +1,29 @@
+.navbar_setting_list {
+  position: relative;
+  list-style: none;
+  width: 100%;
+  padding: 5px;
+  transition: all 150ms ease-in 0.1ms;
+}
+.navbar_setting_list:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px 0 0 10px;
+}
+
+.navbar_setting_list::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 30px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.navbar_setting_list:hover::after {
+  background-color: rgba(0, 0, 0, 0.568);
+}
+
+.navbar_setting_list[data-active="true"]::after {
+  background-color: rgba(0, 0, 0, 0.568);
+}

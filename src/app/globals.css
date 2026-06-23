@@ -1,26 +1,123 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* start add fonts */
+@font-face {
+  font-family: lalezar;
+  font-weight: 300;
+  src: url("/fonts/lalezar/Lalezar-Regular.woff2");
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: kalamehLight;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-Light.woff2") format("woff2");
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: kalamehRegular;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-Regular.woff2") format("woff2");
 }
+@font-face {
+  font-family: kalamehMedium;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: kalamehSemibold;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: kalamehbold;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: kalamehBlack;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/kalame/KalamehWeb-Black.woff2") format("woff2");
+}
+@font-face {
+  font-family: IranYekanbold;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/iran/IRANYekanX-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: IranYekanMedium;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/iran/IRANYekanX-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: IRANYekanXRegular;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/iran/IRANYekanX-Regular.woff2") format("woff2");
+}
+/* end add fonts */
 
+/* global setting */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+/* add custom setting */
+
+@theme {
+  --font-lalezar: "lalezar";
+  --font-kalame-Light: "kalamehLight";
+  --font-kalame-Regular: "kalamehRegular";
+  --font-kalame-Medium: "kalamehMedium";
+  --font-kalame-SemiBold: "kalamehSemibold";
+  --font-kalame-Bold: "kalamehbold";
+  --font-kalame-black: "kalamehBlack";
+  --font-IRANYekanX-Bold: "IranYekanbold";
+  --font-IRANYekanX-medium: "IranYekanMedium";
+  --font-IRANYekanX-Regular: "IRANYekanXRegular";
+  --color-fillBtn: #40e0d0;
+  --color-titleCoLor: #40e0d0;
+  --color-tagsColor: #40e0d0;
+  --color-mainBgColor: #3c4142;
+  --color-CardBgColor: #474f50;
+  --color-whiteTextColorMain: #d4cfc8;
+  --color-whiteTextColorPrime: #8a8880;
+  --breakpoint-800px: 50rem;
+  --breakpoint-600px: 37.5rem;
+  --breakpoint-400px: 25rem;
+  --shadow-center: 0 6px 12px -6px;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+:root {
+  --accent: #40e0d0;
+  --accent-light: #2ecfc0;
+}
+
+html {
+  scroll-behavior: smooth;
+  direction: rtl;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #3c4142;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
 }
