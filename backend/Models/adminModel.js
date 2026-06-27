@@ -22,14 +22,14 @@ const AdminSchema = new mongoose.Schema({
     },
     isActive: {
         type: Boolean,
-        default: true
+        default: false
     },
 }, { timestamps: true })
 
 
 AdminSchema.pre('save', function (next) {
 
-    if (this.role === superAdmin && this.permission.length === 0) {
+    if (this.role === "superAdmin" && this.permission.length === 0) {
         this.permission = ["file", "user", "project", "blog", "admin", 'transactiontype', 'collaboration']
     }
     return next

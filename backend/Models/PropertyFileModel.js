@@ -1,269 +1,76 @@
 import mongoose from "mongoose";
 
-const proPertyFileSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true,
-        trim: true,
-        maxlength: 200
-    },
+const specificationSchema = new mongoose.Schema({
+    key: { type: String, required: true },
+    label: { type: String, required: true },
+    value: { type: mongoose.Schema.Types.Mixed, required: true }
+}, { _id: false });
 
-    description: {
-        type: String,
-        required: false,
-        trim: true,
-        maxlength: 2000
+const unitDetailSchema = new mongoose.Schema({
+    unitNumber: { type: Number, required: true },
+    floor: { type: Number, required: true },
+    meterage: { type: Number, required: true },
+    specifications: [specificationSchema],
+    pricing: {
+        price: { type: Number, required: true, default: 0 },
+        rent: { type: Number, default: 0 },
+        pricePerMeter: { type: Number, default: 0 }
     },
-    brand: {
-        type: String,
-        required: [true, 'brand is required ']
-    },
+    attachments: [{ type: { type: String }, url: String, isMain: Boolean }],
+    isAvailable: { type: Boolean, default: true }
+});
+
+const proPertyFileSchema = new mongoose.Schema({
+    title: { type: String, required: true, trim: true, maxlength: 200 },
+    description: { type: String, trim: true, maxlength: 2000 },
+    brand: { type: String, required: true },
 
     propertyType: {
         type: String,
-        enum: ['apartment', 'villa', 'office', 'shop', 'land', 'building', 'warehouse', 'restaurant', 'hotel'],
+        enum: ['apartment', 'villa', 'office', 'shop', 'land', 'building', 'warehouse', 'restaurant', 'hotel', 'garden'],
         required: true
     },
+    dealType: {
+        type: String,
+        enum: ['sell', 'full_mortgage', 'mortgage_rent', 'pre_sell', 'swap'],
+        required: true
+    },
+
+    year: { type: Number, required: true },
+    landArea: { type: Number },
+    buildingFacade: [{ type: String }],
+
+    features: [{ type: String }],
+
+    buildingSpecifications: [specificationSchema],
 
     address: {
-        province: {
-            type: String,
-            required: true
-        },
-        city: {
-            type: String,
-            required: true
-        },
-        neighborhood: {
-            type: String,
-            required: false
-        },
-        street: {
-            type: String,
-            required: false
-        },
-        alley: {
-            type: String,
-            required: false
-        },
-        plaque: {
-            type: Number,
-            required: false
-        },
-        postalCode: {
-            type: String,
-            required: false
-        },
+        province: { type: String, required: true },
+        city: { type: String, required: true },
+        neighborhood: { type: String },
+        street: { type: String },
         coordinates: {
-            lat: { type: Number, default: 0 },
-            lng: { type: Number, default: 0 }
-        }
-    },
-
-    floor: {
-        type: Number,
-        required: false,
-        min: -5,
-        max: 100
-    },
-
-    totalFloors: {
-        type: Number,
-        default: 1,
-        min: 1
-    },
-
-    area: {
-        type: Number,
-        required: true,
-        min: 1
-    },
-
-    landArea: {
-        type: Number,
-        required: false,
-        min: 1
-    },
-
-    parking: {
-        count: {
-            type: Number,
-            default: 0,
-            min: 0
-        },
-        list: [{
-            type: {
-                type: String,
-                enum: ['covered', 'open', 'basement', 'roof', 'underground', 'mechanical'],
-                default: 'open'
-            },
-            number: {
-                type: Number,
-                min: 1
-            },
-            area: {
-                type: Number,
-                default: 0
-            },
-            isOwned: {
-                type: Boolean,
-                default: true
-            }
-        }]
-    },
-
-    units: {
-        total: {
-            type: Number,
-            default: 1,
-            min: 1
-        },
-
-        byFloor: [{
-            number: {
-                type: Number,
-                required: true
-            },
-        }],
-    },
-
-    rooms: {
-        bedrooms: {
-            type: Number,
-            default: 0,
-            min: 0
-        },
-        livingRooms: {
-            type: Number,
-            default: 1,
-            min: 1
-        },
-        toilets: {
-            type: Number,
-            default: 1,
-            min: 0
-        },
-        bathrooms: {
-            type: Number,
-            default: 1,
-            min: 0
-        },
-        kitchens: {
-            type: Number,
-            default: 1,
-            min: 0
-        },
-        balconies: {
-            type: Number,
-            default: 0,
-            min: 0
-        }
-    },
-
-    features: [{
-        type: String,
-        enum: [
-            'elevator', 'parking', 'warehouse', 'pool', 'gym', 'sauna', 'jacuzzi',
-            'fireplace', 'balcony', 'terrace', 'garden', 'security', 'cctv',
-            'intercom', 'central_heating', 'central_cooling', 'smart_home',
-            'solar_panel', 'water_well', 'emergency_power', 'fire_extinguisher',
-            'playground', 'clubhouse', 'landscaping', 'underground_parking'
-        ]
-    }],
-
-    materials: {
-        type: Map,
-        of: new mongoose.Schema({
-            name: { type: String, required: true },
-            category: {
-                type: String,
-                enum: ['structural', 'finishing', 'mechanical', 'electrical', 'plumbing', 'insulation']
-            },
-            quality: {
-                type: String,
-                enum: ['premium', 'standard', 'economy'],
-                default: 'standard'
-            },
-            description: String,
-            brand: String
-        }),
-        default: {}
-    },
-
-    pricing: {
-        price: {
-            type: Number,
-            required: true,
-            min: 0,
-            default: 0
-        },
-        pricePerMeter: {
-            type: Number,
-            default: 0
-        },
-        isNegotiable: {
-            type: Boolean,
-            default: true
-        },
-
-    },
-
-    year: {
-        type: Number,
-        required: true,
-        min: 1300,
-        max: new Date().getFullYear() + 5
-    },
-
-    propertyStatus: {
-        type: String,
-        enum: ['new', 'under_construction', 'renovated', 'old', 'pre_sale'],
-        default: 'old'
-    },
-
-    attachments: [{
-        type: {
-            type: String,
-            enum: ['image', 'video', 'document', '3d_model']
-        },
-        url: {
-            type: String,
+            type: [Number],
             required: true
-        },
-        title: String,
-        isMain: {
-            type: Boolean,
-            default: false
         }
-    }],
-
-    isPublished: {
-        type: Boolean,
-        default: false
-    },
-    viewCount: {
-        type: Number,
-        default: 0
     },
 
-    transactionType: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TransactionType',
-        required: true
-    },
+    units: [unitDetailSchema],
 
-    verifiedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Admin'
-    },
-
-    publishDate: Date,
-    expiryDate: Date,
-
+    isPublished: { type: Boolean, default: false },
+    viewCount: { type: Number, default: 0 },
+    transactionType: { type: mongoose.Schema.Types.ObjectId, ref: 'TransactionType', required: true }
 }, {
     timestamps: true
 });
 
+proPertyFileSchema.index({ "address.neighborhood": 1, dealType: 1, propertyType: 1 })
 
-const proPertyFile = mongoose.model("proPertyFile", proPertyFileSchema)
-export default proPertyFile
+proPertyFileSchema.index({ "units.specifications.key": 1, "units.specifications.value": 1 });
+proPertyFileSchema.index({ "buildingSpecifications.key": 1, "buildingSpecifications.value": 1 });
+
+proPertyFileSchema.index({ "address.coordinates": "2dsphere" });
+
+
+const proPertyFile = mongoose.model("proPertyFile", proPertyFileSchema);
+export default proPertyFile;
