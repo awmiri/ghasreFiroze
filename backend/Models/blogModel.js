@@ -47,13 +47,18 @@ const blogSchema = new mongoose.Schema({
 
         },
 
-        catId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Category",
-            required: true
+    }],
 
-        }
-    }]
+    catId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+        required: true
+
+    },
+    isPub: {
+        type: Boolean,
+        default: false
+    }
 
 }, { timestamps: true })
 
