@@ -9,7 +9,7 @@ const blogRouter = express.Router()
 
 blogRouter.route('/').get(getAllBlog)
 blogRouter.route('/:id').get(getOneBlog).patch(upload.array('image', 5), updateBlog).delete(isAdmin, checkPermission('blog'), deleteBlog)
-blogRouter.route('/create').post(upload.array('image', 5), createBlog)
+blogRouter.route('/create').post(isAdmin, checkPermission('blog'), upload.array('image', 5), createBlog)
 blogRouter.route('/:blogId/block/:blockId')
     .patch(
         isAdmin,
@@ -25,8 +25,8 @@ blogRouter.route('/:blogId/block/:blockId')
 
 blogRouter.route('/:blogId/block')
     .post(
-        // isAdmin,
-        // checkPermission('blog'),
+        isAdmin,
+        checkPermission('blog'),
         upload.array('image', 5),
         addBlogBlock
 

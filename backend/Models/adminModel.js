@@ -24,6 +24,10 @@ const AdminSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    password: {
+        type: String,
+        required: [true, "send password is requierd"]
+    }
 }, { timestamps: true })
 
 

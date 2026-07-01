@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     fullName: {
         type: String,
-        required: [true, "fullName is required"],
+        // required: [true, "fullName is required"],
     },
 
     phoneNumber: {
@@ -38,22 +38,17 @@ const userSchema = new mongoose.Schema({
         specialties: [String]
     },
 
-
-    collaboration: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Collaboration",
-    },
     collaborationStatus: {
         type: String,
         enum: ['pending', 'approved', 'rejected', null],
         default: null
     },
 
-    isActive: { type: Boolean, default: true },
-
+    isActive: { type: Boolean, default: false },
 
 }, { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
 
 export default User
+

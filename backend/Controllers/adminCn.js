@@ -1,5 +1,7 @@
 import ApiFeatures, { catchAsync, HandleERROR } from "vanta-api";
 import Admin from "../Models/adminModel.js";
+import jwt from 'jsonwebtoken'
+import bcrypt from "bcrypt";
 
 
 export const getAllAdmin = catchAsync(async (req, res, next) => {
@@ -78,7 +80,7 @@ export const updateAdmin = catchAsync(async (req, res, next) => {
 
 
 export const createAdmin = catchAsync(async (req, res, next) => {
-    const { phoneNumber, fullName, permission = [], role, isActive } = req?.body
+    const { phoneNumber, fullName, permission = [], role, isActive, password } = req?.body
 
     if (!phoneNumber || !fullName || !permission || !role || !isActive) {
         return next(new HandleERROR("plese send All fild", 400))
@@ -90,12 +92,14 @@ export const createAdmin = catchAsync(async (req, res, next) => {
         return next(new HandleERROR("admin has already been created", 404))
     }
 
+    const hashPass = await bcrypt.hashSync(password, 10)
     const admin = await Admin.create({
         phoneNumber,
         fullName,
         permission,
         role,
-        isActive
+        isActive,
+        password: hashPass
     })
     return res.status(201).json({
         success: true,
@@ -132,5 +136,41 @@ export const deletAdmin = catchAsync(async (req, res, next) => {
         message: 'admin delete is successfully',
         admin
     })
+
+})
+
+
+export const loginAmin = catchAsync(async (req, res, next) => {
+    const { phoneNumber, password } = req?.body
+
+    if (!phoneNumber || !password) {
+        return next(new HandleERROR("phone number and passWord  send Plese", 400));
+    }
+
+    const user = await Admin.findOne({ phoneNumber }).lean()
+
+
+    if (!user) {
+        return next(new HandleERROR("not Found is user", 404));
+    }
+
+    const isMatch = await bcrypt.compare(password, user?.password)
+
+    if (isMatch) {
+        const token = jwt.sign(
+            { id: user._id, phoneNumber: user.phoneNumber, role: user.role, permission: user.permission },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        )
+        const { password, _id, __v, ...others } = user
+        return res.status(200).json({
+            success: true,
+            user: others,
+            token,
+        })
+
+    } else {
+        next(new HandleERROR("phone number or password wrong", 400))
+    }
 
 })

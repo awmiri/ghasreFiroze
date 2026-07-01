@@ -7,6 +7,10 @@ const collaborationSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
+    fullName: {
+        type: String,
+        required: true
+    },
     requestType: {
         type: String,
         enum: ['contractor', 'buyer', 'seller', "tenant", 'agent'],
@@ -38,3 +42,8 @@ const collaborationSchema = new mongoose.Schema({
     },
 
 })
+
+
+const Collaboration = mongoose.model("Collaboration", collaborationSchema)
+
+export default Collaboration
