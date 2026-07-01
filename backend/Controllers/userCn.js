@@ -57,7 +57,7 @@ export const getOneUser = catchAsync(async (req, res, next) => {
 
 export const checkCode = catchAsync(async (req, res, next) => {
     const { code } = req?.body;
-    const { phoneNumber, type } = jwt.verify(
+    const { phoneNumber, fullName, type } = jwt.verify(
         req.headers?.authorization.split(" ")[1],
         process.env.JWT_SECRET
     );
@@ -70,7 +70,7 @@ export const checkCode = catchAsync(async (req, res, next) => {
                 success: true,
                 message: "user created successfully",
                 newUser
-            });
+            })
         } else if (type == "login") {
             const user = await User.findOne({ phoneNumber });
             const cart = await Cart.findOne({ userId: user._id });
@@ -92,7 +92,7 @@ export const checkCode = catchAsync(async (req, res, next) => {
 });
 
 export const createUser = catchAsync(async (req, res, next) => {
-    const { phoneNumber } = req?.body;
+    const { phoneNumber, fullName } = req?.body;
 
     if (!phoneNumber) {
         return next(new HandleERROR("phone number is required", 400));
@@ -104,7 +104,7 @@ export const createUser = catchAsync(async (req, res, next) => {
     const result = await sendAuthCode(phoneNumber);
     if (result.success) {
         const tempToken = jwt.sign(
-            { phoneNumber, type: "register" },
+            { phoneNumber, fullName, type: "register" },
             process.env.JWT_SECRET
         );
         return res.status(200).json({
@@ -212,5 +212,31 @@ export const isActiveUser = catchAsync(async (req, res, next) => {
 
 
 
+
+})
+
+
+
+export const userCreateByAdmin = catchAsync(async (req, res, next) => {
+    const { fullName, phoneNumber, role } = req.body
+
+    if (!fullName || !phoneNumber || !role) {
+        return next(new HandleERROR("send all filds ", 400))
+    }
+
+    const exitUser = await User.findOne({ phoneNumber })
+    if (exitUser) {
+        return next(new HandleERROR("کاربر از قبل موجود می باشد", 400))
+    }
+
+    const newUser = await User.create({
+        fullName, phoneNumber, role
+    })
+
+    return res.status(201).json({
+        success: true,
+        message: 'create user successfully',
+        data: newUser
+    })
 
 })
