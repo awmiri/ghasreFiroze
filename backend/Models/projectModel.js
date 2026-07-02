@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 
 const projectSchema = new mongoose.Schema({
+
     brand: {
         type: String,
         required: [true, 'برند پروژه الزامی است'],
@@ -24,26 +25,22 @@ const projectSchema = new mongoose.Schema({
 
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Admin",
         required: true
     },
 
     manager: [{
-        name: {
-            type: String,
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Admin",
             required: true,
-            trim: true
         },
         position: {
             type: String,
             required: true,
             trim: true
         },
-        phoneNumber: {
-            type: String,
-            required: true,
-            match: /^09[0-9]{9}$/
-        },
+
         telegram: {
             type: String,
             trim: true
@@ -113,8 +110,7 @@ const projectSchema = new mongoose.Schema({
 
     direction: {
         type: String,
-        enum: ['north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest', 'both', 'multi'],
-        default: 'multi'
+        required: true
     },
 
     totalFloors: {
@@ -228,52 +224,45 @@ const projectSchema = new mongoose.Schema({
 
     features: [{
         type: String,
-        enum: [
-            'elevator', 'parking', 'green_space', 'pool', 'gym', 'sauna',
-            'jacuzzi', 'playground', 'security', 'cctv', 'intercom',
-            'central_heating', 'central_cooling', 'smart_home', 'solar_panel',
-            'emergency_power', 'fire_extinguisher', 'clubhouse', 'landscaping',
-            'underground_parking', 'generator', 'water_tank', 'cctv'
-        ]
     }],
 
-    materials: {
-        type: Map,
-        of: new mongoose.Schema({
-            name: { type: String, required: true },
-            category: {
-                type: String,
-                enum: ['structural', 'finishing', 'mechanical', 'electrical', 'plumbing', 'insulation']
-            },
-            quality: {
-                type: String,
-                enum: ['premium', 'standard', 'economy'],
-                default: 'standard'
-            },
-            brand: String,
-            description: String
-        }),
-        default: {}
-    },
+    // materials: {
+    //     type: Map,
+    //     of: new mongoose.Schema({
+    //         name: { type: String, required: true },
+    //         category: {
+    //             type: String,
+    //             enum: ['structural', 'finishing', 'mechanical', 'electrical', 'plumbing', 'insulation']
+    //         },
+    //         quality: {
+    //             type: String,
+    //             enum: ['premium', 'standard', 'economy'],
+    //             default: 'standard'
+    //         },
+    //         brand: String,
+    //         description: String
+    //     }),
+    //     default: {}
+    // },
 
-    projectStatus: {
-        type: String,
-        enum: [
-            'planning',
-            'foundation',         // فونداسیون
-            'structure',          // اسکلت
-            'enclosure',          // پوسته
-            'mechanical',         // تاسیسات
-            'finishing',          // نازک‌کاری
-            'landscaping',        // محوطه‌سازی
-            'pre_sale',           // پیش‌فروش
-            'ready',              // آماده تحویل
-            'delivered',          // تحویل داده شده
-            'sold_out',           // کاملاً فروش رفته
-            'stopped'             // متوقف شده
-        ],
-        default: 'planning'
-    },
+    // projectStatus: {
+    //     type: String,
+    //     enum: [
+    //         'planning',
+    //         'foundation',         // فونداسیون
+    //         'structure',          // اسکلت
+    //         'enclosure',          // پوسته
+    //         'mechanical',         // تاسیسات
+    //         'finishing',          // نازک‌کاری
+    //         'landscaping',        // محوطه‌سازی
+    //         'pre_sale',           // پیش‌فروش
+    //         'ready',              // آماده تحویل
+    //         'delivered',          // تحویل داده شده
+    //         'sold_out',           // کاملاً فروش رفته
+    //         'stopped'             // متوقف شده
+    //     ],
+    //     default: 'planning'
+    // },
 
     progress: {
         percentage: {
@@ -299,23 +288,64 @@ const projectSchema = new mongoose.Schema({
     estimatedCompletion: Date,
     actualCompletion: Date,
 
-    attachments: [{
-        type: {
-            type: String,
-            enum: ['image', 'video', 'document', '3d_model', 'blueprint', 'permit'],
-            required: true
-        },
-        url: {
-            type: String,
-            required: true
-        },
-        title: String,
-        description: String,
-        isMain: {
-            type: Boolean,
-            default: false
+    attachments: [
+        {
+            type: {
+                type: String,
+                enum: ["image", "video"],
+                required: true
+            },
+
+            url: {
+                type: String,
+                required: true,
+                trim: true
+            },
+
+            originalName: {
+                type: String,
+                trim: true
+            },
+
+            alt: {
+                type: String,
+                trim: true,
+                default: ""
+            },
+
+            title: {
+                type: String,
+                trim: true,
+                default: ""
+            },
+
+            description: {
+                type: String,
+                trim: true,
+                default: ""
+            },
+
+            size: {
+                type: Number,
+                default: 0
+            },
+
+            mimeType: {
+                type: String,
+                trim: true
+            },
+
+            isMain: {
+                type: Boolean,
+                default: false
+            },
+
+            tour: {
+                type: Boolean,
+                default: false
+            }
         }
-    }],
+    ],
 
     projectSimilar: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -339,11 +369,26 @@ const projectSchema = new mongoose.Schema({
     propertyFiles: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "proPertyFile"
-    }]
+    }],
+    isActive: {
+        type: Boolean,
+        default: false
+    }
 
 }, {
     timestamps: true
 });
+
+
+projectSchema.index({
+    title: "text",
+    description: "text",
+});
+
+projectSchema.index({
+    brand: 1,
+});
+
 
 const Project = mongoose.model("Project", projectSchema)
 

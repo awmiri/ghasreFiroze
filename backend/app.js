@@ -7,6 +7,7 @@ import adminRouter from "./Routes/adminRouter.js"
 import { get } from "http"
 import blogRouter from "./Routes/blogRouter.js"
 import categoryRouter from "./Routes/categoryRouter.js"
+import projectRouter from "./Routes/projectRouter.js"
 
 
 export const __dirname = path.resolve()
@@ -30,6 +31,7 @@ app.use(
 app.use('/api/v1/admin', adminRouter)
 app.use('/api/v1/blog', blogRouter)
 app.use('/api/v1/category', categoryRouter)
+app.use('/api/v1/projects', projectRouter)
 
 app.use(catchAsync)
 app.use(catchError)
